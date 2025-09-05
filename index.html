@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio - Data Analyst</title>
+  <style>
+    /* ----- Reset básico ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #e0e0e0; /* gris claro futurista */
+      color: #372646;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6a0dad, #9d4edd);
+      color: white;
+      padding: 2.5rem 2rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    nav {
+      margin-top: 1rem;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffe66d;
+    }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #6a0dad;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .skill {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(106, 13, 173, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .skill:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(106, 13, 173, 0.35);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(157, 78, 221, 0.25);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 18px rgba(157, 78, 221, 0.4);
+    }
+
+    .project-card h3 {
+      margin-bottom: 1rem;
+      color: #4b0082;
+    }
+
+    .project-card a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #6a0dad;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .project-card a:hover {
+      background: #9d4edd;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin: 10px;
+      color: #6a0dad;
+      font-weight: bold;
+      text-decoration: none;
+      border: 2px solid #6a0dad;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .contact a:hover {
+      background: #6a0dad;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #4b0082;
+      color: white;
+      margin-top: 2rem;
+    }
+
+    /* ----- Menú hamburguesa ----- */
+    .menu-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+      z-index: 1001;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 0;
+      left: -250px; /* oculto por defecto */
+      width: 250px;
+      height: 100%;
+      background: #fff;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      padding: 2rem 1rem;
+      transition: left 0.3s;
+      z-index: 1000;
+    }
+
+    .menu-panel.open {
+      left: 0;
+    }
+
+    .menu-panel h3 {
+      margin-bottom: 1.5rem;
+      color: #6a0dad;
+    }
+
+    .menu-panel button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      background: #6a0dad;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .menu-panel button:hover {
+      background: #9d4edd;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Icono de menú -->
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <!-- Panel del menú -->
+    <div class="menu-panel" id="menuPanel">
+      <h3>Idioma / Language</h3>
+      <button onclick="setLanguage('es')">Español</button>
+      <button onclick="setLanguage('en')">English</button>
+    </div>
+
+    <h1 id="name">Sebastian Bolaños Cacho Pacheco</h1>
+    <p id="subtitle">Aspirante a Data Analyst | Python | SQL | Tableau | R | Excel</p>
+    <nav>
+      <a href="#about" id="navAbout">Sobre mí</a>
+      <a href="#skills" id="navSkills">Habilidades</a>
+      <a href="#projects" id="navProjects">Proyectos</a>
+      <a href="#contact" id="navContact">Contacto</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2 id="aboutTitle">Sobre mí</h2>
+    <p id="aboutText" style="text-align:center; max-width:700px; margin:auto;">
+      Soy un aspirante a Data Analyst con experiencia en Python, SQL, Excel y herramientas de visualización
+      como Tableau y Google Sheets. Me apasiona transformar datos en insights útiles para la toma de decisiones.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2 id="skillsTitle">Habilidades</h2>
+    <div class="skills-grid">
+      <div class="skill" id="skill1">HTML & CSS</div>
+      <div class="skill" id="skill2">SQL</div>
+      <div class="skill" id="skill3">Python</div>
+      <div class="skill" id="skill4">R</div>
+      <div class="skill" id="skill5">Tableau</div>
+      <div class="skill" id="skill6">Excel</div>
+      <div class="skill" id="skill7">Google Sheets</div>
+      <div class="skill" id="skill8">Flask</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 id="projectsTitle">Proyectos</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3 id="proj1Title">Dashboard de Ventas</h3>
+        <p id="proj1Text">Creación de un dashboard interactivo en Tableau para analizar ventas mensuales.</p>
+        <a href="https://github.com/tuusuario/proyecto1" target="_blank" id="proj1Link">Ver en GitHub</a>
+      </div>
+      <div class="project-card">
+        <h3 id="proj2Title">Modelo Predictivo</h3>
+        <p id="proj2Text">Modelo en Python y R para predecir precios utilizando regresión múltiple.</p>
+        <a href="https://github.com/tuusuario/proyecto2" target="_blank" id="proj2Link">Ver en GitHub</a>
+      </div>
+      <div class="project-card">
+        <h3 id="proj3Title">Automatización con SQL</h3>
+        <p id="proj3Text">Scripts SQL para limpieza de datos y generación de reportes automáticos.</p>
+        <a href="https://github.com/tuusuario/proyecto3" target="_blank" id="proj3Link">Ver en GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 id="contactTitle">Contacto</h2>
+    <div class="contact">
+      <a href="mailto:tianpacheco2000@gmail.com" id="contactEmail">Correo</a>
+      <a href="https://www.linkedin.com/in/sebastian-bola%C3%B1os-cacho-pacheco-808291242/" target="_blank" id="contactLinkedIn">LinkedIn</a>
+      <a href="https://github.com/tuusuario" target="_blank" id="contactGitHub">GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <p id="footerText">© 2025 Sebastian Bolaños Cacho Pacheco | Portafolio de Data Analyst</p>
+  </footer>
+
+  <script>
+  const menuPanel = document.getElementById('menuPanel');
+
+  // Abrir/Cerrar menú
+  function toggleMenu() {
+    menuPanel.classList.toggle('open');
+  }
+
+  // Cambiar idioma
+  function setLanguage(lang) {
+    menuPanel.classList.remove('open'); // cerrar menú al seleccionar idioma
+
+    if(lang === 'es') {
+      // Header y navegación
+      document.getElementById('name').textContent = "Sebastian Bolaños Cacho Pacheco";
+      document.getElementById('subtitle').textContent = "Aspirante a Data Analyst | Python | SQL | Tableau | R | Excel";
+      document.getElementById('navAbout').textContent = "Sobre mí";
+      document.getElementById('navSkills').textContent = "Habilidades";
+      document.getElementById('navProjects').textContent = "Proyectos";
+      document.getElementById('navContact').textContent = "Contacto";
+
+      // Secciones
+      document.getElementById('aboutTitle').textContent = "Sobre mí";
+      document.getElementById('aboutText').textContent = "Soy un aspirante a Data Analyst con experiencia en Python, SQL, Excel y herramientas de visualización como Tableau y Google Sheets. Me apasiona transformar datos en insights útiles para la toma de decisiones.";
+
+      document.getElementById('skillsTitle').textContent = "Habilidades";
+      document.getElementById('skill1').textContent = "HTML & CSS";
+      document.getElementById('skill2').textContent = "SQL";
+      document.getElementById('skill3').textContent = "Python";
+      document.getElementById('skill4').textContent = "R";
+      document.getElementById('skill5').textContent = "Tableau";
+      document.getElementById('skill6').textContent = "Excel";
+      document.getElementById('skill7').textContent = "Google Sheets";
+      document.getElementById('skill8').textContent = "Flask";
+
+      document.getElementById('projectsTitle').textContent = "Proyectos";
+      document.getElementById('proj1Title').textContent = "Dashboard de Ventas";
+      document.getElementById('proj1Text').textContent = "Creación de un dashboard interactivo en Tableau para analizar ventas mensuales.";
+      document.getElementById('proj1Link').textContent = "Ver en GitHub";
+
+      document.getElementById('proj2Title').textContent = "Modelo Predictivo";
+      document.getElementById('proj2Text').textContent = "Modelo en Python y R para predecir precios utilizando regresión múltiple.";
+      document.getElementById('proj2Link').textContent = "Ver en GitHub";
+
+      document.getElementById('proj3Title').textContent = "Automatización con SQL";
+      document.getElementById('proj3Text').textContent = "Scripts SQL para limpieza de datos y generación de reportes automáticos.";
+      document.getElementById('proj3Link').textContent = "Ver en GitHub";
+
+      document.getElementById('contactTitle').textContent = "Contacto";
+      document.getElementById('contactEmail').textContent = "Correo";
+      document.getElementById('contactLinkedIn').textContent = "LinkedIn";
+      document.getElementById('contactGitHub').textContent = "GitHub";
+
+      document.getElementById('footerText').textContent = "© 2025 Sebastian Bolaños Cacho Pacheco | Portafolio de Data Analyst";
+
+    } else if(lang === 'en') {
+      // Header y navegación
+      document.getElementById('name').textContent = "Sebastian Bolaños Cacho Pacheco";
+      document.getElementById('subtitle').textContent = "Aspiring Data Analyst | Python | SQL | Tableau | R | Excel";
+      document.getElementById('navAbout').textContent = "About Me";
+      document.getElementById('navSkills').textContent = "Skills";
+      document.getElementById('navProjects').textContent = "Projects";
+      document.getElementById('navContact').textContent = "Contact";
+
+      // Secciones
+      document.getElementById('aboutTitle').textContent = "About Me";
+      document.getElementById('aboutText').textContent = "I am an aspiring Data Analyst with experience in Python, SQL, Excel, and visualization tools like Tableau and Google Sheets. I am passionate about turning data into actionable insights for decision-making.";
+
+      document.getElementById('skillsTitle').textContent = "Skills";
+      document.getElementById('skill1').textContent = "HTML & CSS";
+      document.getElementById('skill2').textContent = "SQL";
+      document.getElementById('skill3').textContent = "Python";
+      document.getElementById('skill4').textContent = "R";
+      document.getElementById('skill5').textContent = "Tableau";
+      document.getElementById('skill6').textContent = "Excel";
+      document.getElementById('skill7').textContent = "Google Sheets";
+      document.getElementById('skill8').textContent = "Flask";
+
+      document.getElementById('projectsTitle').textContent = "Projects";
+      document.getElementById('proj1Title').textContent = "Sales Dashboard";
+      document.getElementById('proj1Text').textContent = "Creation of an interactive Tableau dashboard to analyze monthly sales.";
+      document.getElementById('proj1Link').textContent = "View on GitHub";
+
+      document.getElementById('proj2Title').textContent = "Predictive Model";
+      document.getElementById('proj2Text').textContent = "Python and R model to predict prices using multiple regression.";
+      document.getElementById('proj2Link').textContent = "View on GitHub";
+
+      document.getElementById('proj3Title').textContent = "SQL Automation";
+      document.getElementById('proj3Text').textContent = "SQL scripts for data cleaning and automatic report generation.";
+      document.getElementById('proj3Link').textContent = "View on GitHub";
+
+      document.getElementById('contactTitle').textContent = "Contact";
+      document.getElementById('contactEmail').textContent = "Email";
+      document.getElementById('contactLinkedIn').textContent = "LinkedIn";
+      document.getElementById('contactGitHub').textContent = "GitHub";
+
+      document.getElementById('footerText').textContent = "© 2025 Sebastian Bolaños Cacho Pacheco | Data Analyst Portfolio";
+    }
+  }
+  </script>
+</body>
+</html>
+
